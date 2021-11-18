@@ -7,8 +7,8 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 
 app = Flask(__name__)
 
-tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-medium")
-model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-medium")
+tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")
+model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-small")
 
 @app.route("/")
 def home():
