@@ -2,13 +2,13 @@
 from flask import Flask, render_template, request
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
-
+import os
 # %%
 
 app = Flask(__name__)
 
-tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")
-model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-small")
+tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-large")
+model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-large")
 
 @app.route("/")
 def home():
@@ -28,4 +28,7 @@ def get_bot_response():
         return str(tokenizer.decode(chat_history_ids[:, bot_input_ids.shape[-1]:][0], skip_special_tokens=True))
 
 if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0", port=8080)
+    # Get port and debug mode from environment variables    
+    port = os.environ.get('dash_port')
+    debug = os.environ.get('dash_debug')=="True"
+    app.run(debug=debug, host="0.0.0.0", port=port)
